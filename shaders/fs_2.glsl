@@ -24,7 +24,7 @@ void main() {
 
     if(diffType == 1){
       //LAMBERT
-   diffuseTerm = lightColor * mDiffColor  * clamp(dot(-lightDirection,nNormal), 0.0, 1.0);
+   diffuseTerm = lightColor * mDiffColor  * clamp(dot(nNormal,lightDirection), 0.0, 1.0);
 
     }
     if(diffType == 2){
