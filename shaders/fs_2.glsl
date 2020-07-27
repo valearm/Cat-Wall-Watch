@@ -18,36 +18,35 @@ uniform int diffType; // used to filter the diffuse type from GUI
 
 void main() {
   vec3 nNormal = normalize(fsNormal);
-  vec3 eyeDir = normalize(eyePos - fsPos);
-  float DToonTh = 50.0;
-  vec3 nLightDirection = normalize(-lightDirection);
+      vec3 eyeDir = normalize(eyePos - fsPos);
+              float DToonTh = 50.0;
   vec4 diffuseTerm = vec4(1.0, 1.0, 1.0, 1.0);
 
     if(diffType == 1){
       //LAMBERT
-   diffuseTerm = lightColor * mDiffColor  * clamp(dot(nLightDirection,nNormal), 0.0, 1.0);
+   diffuseTerm = lightColor * mDiffColor  * clamp(dot(lightDirection,nNormal), 0.0, 1.0);
 
     }
     if(diffType == 2){
     // OREN-NAYAR
   	float sigma2 = 0.25;
-  	float theta_i = acos(dot(nLightDirection, nNormal));
+  	float theta_i = acos(dot(lightDirection, nNormal));
       float theta_r = acos(dot(eyeDir, nNormal));
       float alpha = max(theta_i, theta_r);
       float beta = min(theta_i, theta_r);
       float A = 1.0 - 0.5 * sigma2/(sigma2 + 0.33);
       float B = 0.45 * sigma2 / (sigma2 + 0.09);
-      vec3 v_i = normalize(nLightDirection - dot(nLightDirection, nNormal) * nNormal);
+      vec3 v_i = normalize(lightDirection - dot(lightDirection, nNormal) * nNormal);
       vec3 v_r = normalize(eyeDir - dot(eyeDir, nNormal) * nNormal);
       float G = max(0.0, dot(v_i, v_r));
-      float Lcontr = clamp(dot(nLightDirection, nNormal),0.0,1.0);
+      float Lcontr = clamp(dot(lightDirection, nNormal),0.0,1.0);
       vec4 diffuseOrenNayar = lightColor * mDiffColor * Lcontr * (A + B * G * sin(alpha) * tan(beta));
       diffuseTerm = diffuseOrenNayar;
     }
     if(diffType == 3){
 
       //TOON
-      vec4 diffuseToon = max(sign(max(0.0, dot(nNormal, nLightDirection)) - DToonTh ), 0.0) * lightColor * mDiffColor;
+      vec4 diffuseToon = max(sign(max(0.0, dot(nNormal, lightDirection)) - DToonTh ), 0.0) * lightColor * mDiffColor;
       diffuseTerm = diffuseToon;
     }
 
@@ -55,14 +54,14 @@ void main() {
     //-----------------PHONG -----------------------------
     vec4 specularTerm = vec4(0.0, 0.0, 0.0, 1.0);
     if(specType == 1){
-    vec3 reflectDir = normalize(-reflect(nLightDirection, nNormal));
+    vec3 reflectDir = normalize(-reflect(lightDirection, nNormal));
     vec4 specularPhong = specularColor * pow(clamp(dot(eyeDir, reflectDir), 0.0, 1.0), specShine);
     specularTerm = specularPhong;
     }else{
 
 
     //-----------------BLINN-----------------------------
-    vec3 halfVec = normalize(eyeDir + nLightDirection);
+    vec3 halfVec = normalize(eyeDir + lightDirection);
     specularTerm = specularColor * pow(max(dot(halfVec, nNormal), 0.0), specShine);
     }
 
