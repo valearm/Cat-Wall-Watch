@@ -709,7 +709,7 @@ async function init() {
   });
 
   //###################################################################################
-  //This loads the obj model in the boatModel variable
+  //This loads the obj model in the catModel variable
   var catObjStr = await utils.get_objstr(baseDir + modelStr[0]);
   catModel = new OBJ.Mesh(catObjStr);
 
