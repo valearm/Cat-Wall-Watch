@@ -34,7 +34,7 @@ vec4 diffTerm = vec4(1.0, 1.0, 1.0, 1.0);
 
     if(diffType == 1){
       //LAMBERT
-    diffTerm = lightColor  * texcol * clamp(dot(-lightDirection,nNormal), 0.0, 1.0);
+    diffTerm = lightColor  * texcol * clamp(dot(nNormal,lightDirection), 0.0, 1.0);
     }
     if(diffType == 2){
     // OREN-NAYAR
@@ -45,7 +45,7 @@ vec4 diffTerm = vec4(1.0, 1.0, 1.0, 1.0);
       float beta = min(theta_i, theta_r);
       float A = 1.0 - 0.5 * sigma2/(sigma2 + 0.33);
       float B = 0.45 * sigma2 / (sigma2 + 0.09);
-      vec3 v_i = normalize(lightDirection - dot(-lightDirection, nNormal) * nNormal);
+      vec3 v_i = normalize(lightDirection - dot(lightDirection, nNormal) * nNormal);
       vec3 v_r = normalize(eyeDir - dot(eyeDir, nNormal) * nNormal);
       float G = max(0.0, dot(v_i, v_r));
       float Lcontr = clamp(dot(lightDirection, nNormal),0.0,1.0);
@@ -55,7 +55,7 @@ vec4 diffTerm = vec4(1.0, 1.0, 1.0, 1.0);
     if(diffType == 3){
 
       //TOON
-      vec4 diffuseToon = max(sign(max(0.0, dot(-lightDirection, nNormal)) - DToonTh ), 0.0) * lightColor * texcol;
+      vec4 diffuseToon = max(sign(max(0.0, dot(nNormal, lightDirection)) - DToonTh ), 0.0) * lightColor * texcol;
       diffTerm = diffuseToon;
     }
 
