@@ -20,8 +20,8 @@ var backgroundColorG=0.0;
 var backgroundColorB=0.0;
 
   var specularShine = 100;
-  var alpha = 45;
-  var beta = 45;
+  var alpha = 120;
+  var beta = 90;
   var specularColor = [1.0, 0.0, 0.0, 1.0];
   var ambientLight = [0.1, 0.1, 0.1, 1.0];
   //directional light
