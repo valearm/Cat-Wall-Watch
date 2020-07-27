@@ -197,7 +197,7 @@ function main() {
 
 
 
-  //utils.resizeCanvasToDisplaySize(gl.canvas);
+  utils.resizeCanvasToDisplaySize(gl.canvas);
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   gl.clearColor(backgroundColorR, backgroundColorG, backgroundColorB, 1.0);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -540,7 +540,8 @@ function main() {
     tailNormalMatrix = utils.invertMatrix(utils.transposeMatrix(tailLocalMatrix));
     clockHand1NormalMatrix = utils.invertMatrix(utils.transposeMatrix(clockHand1LocalMatrix));
     clockHand2NormalMatrix = utils.invertMatrix(utils.transposeMatrix(clockHand2LocalMatrix));
-
+    
+    utils.resizeCanvasToDisplaySize(gl.canvas);
     gl.clearColor(backgroundColorR, backgroundColorG, backgroundColorB, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
